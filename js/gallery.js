@@ -1,7 +1,3 @@
-import basicLightbox from "basiclightbox";
-
-
-
 const images = [
   {
     preview:
