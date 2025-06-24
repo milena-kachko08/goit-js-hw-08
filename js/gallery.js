@@ -64,7 +64,7 @@ const images = [
   },
 ];
 
-const listGallery = document.querySelector(".gallery");
+const listGallery = document.querySelector('.gallery');
 
 listGallery.innerHTML = images
   .map(
@@ -80,30 +80,32 @@ listGallery.innerHTML = images
       </a>
     </li>`
   )
-  .join("");
+  .join('');
 
-listGallery.addEventListener("click", (event) => {
+listGallery.addEventListener('click', event => {
   event.preventDefault();
 
   const target = event.target;
-  if (target.nodeName !== "IMG") return;
+  if (target.nodeName !== 'IMG') return;
 
-  const { source, alt } = target.dataset;
-  const original = source;
+  const original = target.dataset.source;
+  const alt = target.alt;
+
+  let onEsc;
 
   const modal = basicLightbox.create(
     `<img src="${original}" alt="${alt}" class="modal-img" />`,
     {
-      onShow: (modalInstance) => {
-        const onEsc = (e) => {
-          if (e.key === "Escape") {
-            modalInstance.close();
+      onShow: () => {
+        onEsc = e => {
+          if (e.key === 'Escape') {
+            modal.close();
           }
         };
-        window.addEventListener("keydown", onEsc);
-        modalInstance.element().addEventListener("hidden", () => {
-          window.removeEventListener("keydown", onEsc);
-        });
+        window.addEventListener('keydown', onEsc);
+      },
+      onClose: () => {
+        window.removeEventListener('keydown', onEsc);
       },
     }
   );
